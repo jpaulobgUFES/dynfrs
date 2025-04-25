@@ -1,0 +1,39 @@
+# fly.toml file generated for rails-example on 2020-10-29T23:49:58-06:00
+
+app = "dyn"
+
+[build]
+image = "registry.fly.io/dyn"
+
+[http_service]
+internal_port = 10011
+force_https = true
+
+[http_service.concurrency]
+type= "requests"
+soft_limit = 200
+hard_limit = 250
+
+[[http_service.checks]]
+grace_period = "10s"
+interval = "30s"
+method = "GET"
+timeout = "5s"
+path = "/healthz"
+
+[[vm]]
+size = "shared-cpu-2x"
+memory = "4gb"
+
+
+[env]
+  CARTESI_BLOCKCHAIN_FINALITY_OFFSET = "1"
+  CARTESI_BLOCKCHAIN_ID = "11155111"
+  CARTESI_CONTRACTS_APPLICATION_ADDRESS = "0xfe8b1447d72c3c369833bbbdc3a6eae33fc34159"
+  CARTESI_CONTRACTS_APPLICATION_DEPLOYMENT_BLOCK_NUMBER =    "7225232"
+  CARTESI_CONTRACTS_AUTHORITY_ADDRESS = "0xd54acc7a951a0482977b22d33226474d6a3b96b0"
+  CARTESI_CONTRACTS_HISTORY_ADDRESS =  "0xF3D5D62c3F48b5639A8B2a2EBc5F86801A7a82b6"
+  CARTESI_CONTRACTS_INPUT_BOX_ADDRESS = "0x59b22D57D4f067708AB0c00552767405926dc768"
+  CARTESI_CONTRACTS_INPUT_BOX_DEPLOYMENT_BLOCK_NUMBER =  "3963384"
+  CARTESI_EPOCH_DURATION = "86400"
+
