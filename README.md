@@ -1,18 +1,19 @@
-# Depoloyment 
+# Deployment 
 
-1. Clonar repositorio em  https://anonymous.4open.science/r/DynFrs-2603/
+1. Clone the repository  https://anonymous.4open.science/r/DynFrs-2603/
 
-2.  Criar aplicação 
+2.  Create Application
+    
 ``` shell
 $ cartesi create DynFrs –template cpp
 
 $ cp DynFrs.h  roc_auc.h main.cpp DynFrs/
 ```
 
-4. Mover o conteúdo de main.cpp para dapp.cpp
+4. Copy the content of main.cpp to dapp.cpp
  
-5. Configurar Makefile para compilar o código
-
+5. Modify Makefile
+``` shell
 CXX  := g++
 
 .PHONY: clean 3rdparty
@@ -83,7 +84,7 @@ ENV ROLLUP_HTTP_SERVER_URL="http://127.0.0.1:5004"
 
 ENTRYPOINT ["rollup-init"]
 CMD ["/opt/cartesi/dapp/dapp -data Adult -auto -unl_cnt 100 -acc"]
-
+```
 7. Montar e executar aplicação
 
 $ cartesi build
