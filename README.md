@@ -1,6 +1,9 @@
 
 # Deployment of Machine Unlearning App in a Cartesi Machine
 
+
+This repository is an experiment on running a Machine Unlearning Cartesi Rollup Application on top of the HyperLedge Besu. The process is divided into five steps to help you comprehend it.
+
 ## 1. Clone the repository
 
   https://anonymous.4open.science/r/DynFrs-2603/
