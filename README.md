@@ -1,10 +1,11 @@
+# Depoloyment 
 
 1. Clonar repositorio em  https://anonymous.4open.science/r/DynFrs-2603/
 
 2.  Criar aplicação 
-
+``` shell
 $ cartesi create DynFrs –template cpp
-
+---
 3. Copiar arquivos do repositório para o diretório da aplicação
 
 $ cp DynFrs.h  roc_auc.h main.cpp DynFrs/
