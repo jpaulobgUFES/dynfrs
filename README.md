@@ -1,5 +1,5 @@
 
-#Deployment of Machine Unlearning App in a Cartesi Machine
+# Deployment of Machine Unlearning App in a Cartesi Machine
 
 ## 1. Clone the repository
 
