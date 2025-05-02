@@ -90,7 +90,7 @@ CMD ["/opt/cartesi/dapp/dapp -data Adult -auto -unl_cnt 100 -acc"]
 $ cartesi build
 
 ```
-## 2 - Deploying the Cartesi DApp
+## 3 - Deploying the Cartesi DApp
 For this step you need to build your Cartesi DApp using [cartesi-cli](https://www.npmjs.com/package/@cartesi/cli) then you can deploy it using the script we provide. The script is going to output an env file with setup informations for the Cartesi Node. This env file is used on step 3 and use <machine_hash>.env pattern as its name.
 
 ``` shell
@@ -98,7 +98,7 @@ For this step you need to build your Cartesi DApp using [cartesi-cli](https://ww
 ```
 
 
-## 3 - Running the Cartesi Rollup Node
+## 4 - Running the Cartesi Rollup Node
 
 Start by running a POSTGRES database that will be used by the node using the command below. The command runs a Postgres database of password "mysecretpassword", and user "postgres". We are also exposing port 5432 through port 15432.
 ``` shell
@@ -121,7 +121,7 @@ Finally, run the Cartesi Node
 docker run --env-file <.node.env> -p 10000:10000 --add-host host.docker.internal=host-gateway <cartesi-machine-image-id>
 ```
 
-## 4 - Interacting with the Cartesi Rollup Application
+## 5 - Interacting with the Cartesi Rollup Application
 After deploying the application and running the Cartesi Node, you can normally interact with it using the [cartesi-cli](https://www.npmjs.com/package/@cartesi/cli). Use the `cartesi send` command to send an input to your dapp.
 
 > [!TIP]
