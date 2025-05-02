@@ -1,8 +1,8 @@
-# Deployment 
+## 1. Clone the repository
 
-1. Clone the repository  https://anonymous.4open.science/r/DynFrs-2603/
+  https://anonymous.4open.science/r/DynFrs-2603/
 
-2.  Create Application
+## 2.  Create Application
     
 ``` shell
 $ cartesi create DynFrs –template cpp
@@ -10,9 +10,9 @@ $ cartesi create DynFrs –template cpp
 $ cp DynFrs.h  roc_auc.h main.cpp DynFrs/
 ```
 
-4. Copy the content of main.cpp to dapp.cpp
+ Copy the content of main.cpp to dapp.cpp
  
-5. Modify Makefile
+ Modify Makefile
 ``` shell
 CXX  := g++
 
@@ -26,7 +26,7 @@ clean:
 	@rm -rf dapp
 	make -C 3rdparty clean
 
-6. Alterar Dockerfile aumentando a RAM da cartesi machine e copiar os arquivos do dataset, além de configurar o treinamento 
+ Alterar Dockerfile aumentando a RAM da cartesi machine e copiar os arquivos do dataset, além de configurar o treinamento 
 
 FROM --platform=linux/riscv64 ubuntu:22.04 AS builder
 
@@ -85,47 +85,49 @@ ENV ROLLUP_HTTP_SERVER_URL="http://127.0.0.1:5004"
 ENTRYPOINT ["rollup-init"]
 CMD ["/opt/cartesi/dapp/dapp -data Adult -auto -unl_cnt 100 -acc"]
 ```
-7. Montar e executar aplicação
-
+ Build the Application
+``` shell
 $ cartesi build
 
-$ cartesi run
+```
+## 2 - Deploying the Cartesi DApp
+For this step you need to build your Cartesi DApp using [cartesi-cli](https://www.npmjs.com/package/@cartesi/cli) then you can deploy it using the script we provide. The script is going to output an env file with setup informations for the Cartesi Node. This env file is used on step 3 and use <machine_hash>.env pattern as its name.
 
-8. Fazendo deploy da aplicação publicamente
-
-$ cartesi deploy --hosting self-hosted --webapp http://sunodo.io/deploy
-
-
-9. Deploy da Cartesi Machine criada  na plataforma Fly.io: 
-
-Instalar flyctl command  curl -L https://fly.io/install.sh | sh
-
-Após instalar o aplicativo fly deve-se usar os seguintes comandos para subir o container.
-
-$ fly app create <app-name>
-New app created: <app-name>
-
-10. Criar base de dados Postgres
-
-$ fly postgres create --initial-cluster-size 1 --name <app-name>-database --vm-size shared-cpu-1x --volume-size 1
-
-11. Conectar banco de dados à aplicação
-
-$ fly postgres attach <app-name>-database -a <app-name>
-
-12. Download fly.toml e mova para o diretório da sua aplicação.
+``` shell
+./deploy_dapp.sh <path_to_your_cartesi_dapp>
+```
 
 
+## 3 - Running the Cartesi Rollup Node
 
+Start by running a POSTGRES database that will be used by the node using the command below. The command runs a Postgres database of password "mysecretpassword", and user "postgres". We are also exposing port 5432 through port 15432.
+``` shell
+docker run --name cartesi-node-postgres -e POSTGRES_PASSWORD=mysecretpassword -d -p 15432:5432 postgres
+```
 
+Now, add the Postgres URL to the <machine_hash>.env generated previously. The URL changes according to the values chosen when running the database, but considering our example, you should use the following value:
 
-13. Fazer o deploy final do node.
+```
+CARTESI_POSTGRES_ENDPOINT=postgres://postgres:mysecretpassword@host.docker.internal:15432/postgres
+```
 
-Etiquetar a imagem que foi criada no início do processo e envie para registro no Fly.io 
+Build the node Docker Image.
+``` shell
+cartesi deploy build --platform linux/amd64
+```
 
-$ flyctl auth docker
-$ docker image tag <image-id> registry.fly.io/<app-name>
-$ docker image push registry.fly.io/<app-name>
-$ fly deploy -a <app-name>
+Finally, run the Cartesi Node
+``` shell
+docker run --env-file <.node.env> -p 10000:10000 --add-host host.docker.internal=host-gateway <cartesi-machine-image-id>
+```
 
+## 4 - Interacting with the Cartesi Rollup Application
+After deploying the application and running the Cartesi Node, you can normally interact with it using the [cartesi-cli](https://www.npmjs.com/package/@cartesi/cli). Use the `cartesi send` command to send an input to your dapp.
+
+> [!TIP]
+> You can get your DApp address in the <machine_hash>.env file
+
+``` shell
+cartesi send generic --dapp <dapp_address> --input <payload>
+```
 
