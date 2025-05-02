@@ -5,7 +5,7 @@
 
   https://anonymous.4open.science/r/DynFrs-2603/
 
-## 2.  Create Application
+## 2.  Create the Application
     
 ``` shell
 $ cartesi create DynFrs –template cpp
