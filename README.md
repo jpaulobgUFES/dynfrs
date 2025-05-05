@@ -71,7 +71,7 @@ clean:
 
 ```
 
-## 4. Modify the Dockerfile by increasing the available RAM memory of the Cartesi Machine and copying the dataset files, in addition to configuring the training
+## 4. Modify the available Cartesi Machine RAM, copy the files and configure the training in the Dockerfile
 ``` shell
 FROM --platform=linux/riscv64 ubuntu:22.04 AS builder
 
