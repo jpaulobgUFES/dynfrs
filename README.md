@@ -9,7 +9,7 @@ This is the official implementation for DynFrs which is an efficient framework t
 
   https://anonymous.4open.science/r/DynFrs-2603/
 
-## 2.  Create the Application
+## 2.  Create the Application and copy the files to the directory
     
 ``` shell
 $ cartesi create DynFrs –template cpp
@@ -19,7 +19,7 @@ $ cp DynFrs.h  roc_auc.h main.cpp DynFrs/
 
  Copy the content of main.cpp to dapp.cpp
 
- Insert the Cartesi dapp functions in the code
+ Insert the Cartesi dapp functions in the daap.cpp code. You can insert at the end of the file.
 
 ``` shell
  std::map<std::string, decltype(&handle_advance)> handlers = {
@@ -54,8 +54,8 @@ $ cp DynFrs.h  roc_auc.h main.cpp DynFrs/
 	return 0;
 
  ```
- 
- Modify Makefile
+ ## 3. Modify the Makefile to insert the command to compline the app
+
 ``` shell
 CXX  := g++
 
@@ -69,7 +69,7 @@ clean:
 	@rm -rf dapp
 	make -C 3rdparty clean
 
- Alterar Dockerfile aumentando a RAM da cartesi machine e copiar os arquivos do dataset, além de configurar o treinamento 
+##4. Modify the Dockerfile by increasing the available RAM memory of the Cartesi Machine and copying the dataset files, in addition to configuring the training
 
 FROM --platform=linux/riscv64 ubuntu:22.04 AS builder
 
@@ -134,9 +134,7 @@ $ cartesi build
 
 ```
 
-
-
-## 3 - Deploying the Cartesi DApp
+## 4 - Deploying the Cartesi DApp
 For this step you need to build your Cartesi DApp using [cartesi-cli](https://www.npmjs.com/package/@cartesi/cli) then you can deploy it using the script we provide. The script is going to output an env file with setup informations for the Cartesi Node. This env file is used on step 3 and use <machine_hash>.env pattern as its name.
 
 ``` shell
@@ -144,7 +142,7 @@ For this step you need to build your Cartesi DApp using [cartesi-cli](https://ww
 ```
 
 
-## 4 - Running the Cartesi Rollup Node
+## 5 - Running the Cartesi Rollup Node
 
 Start by running a POSTGRES database that will be used by the node using the command below. The command runs a Postgres database of password "mysecretpassword", and user "postgres". We are also exposing port 5432 through port 15432.
 ``` shell
@@ -167,7 +165,7 @@ Finally, run the Cartesi Node
 docker run --env-file <.node.env> -p 10000:10000 --add-host host.docker.internal=host-gateway <cartesi-machine-image-id>
 ```
 
-## 5 - Interacting with the Cartesi Rollup Application
+## 6 - Interacting with the Cartesi Rollup Application
 After deploying the application and running the Cartesi Node, you can normally interact with it using the [cartesi-cli](https://www.npmjs.com/package/@cartesi/cli). Use the `cartesi send` command to send an input to your dapp.
 
 > [!TIP]
