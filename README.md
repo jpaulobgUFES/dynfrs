@@ -54,7 +54,7 @@ $ cp DynFrs.h  roc_auc.h main.cpp DynFrs/
 	return 0;
 
  ```
- ## 3. Modify the Makefile to insert the command to compline the app
+ ## 3. Modify the Makefile to insert the command to compile the app
 
 ``` shell
 CXX  := g++
